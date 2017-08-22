@@ -1,7 +1,16 @@
-FROM java:8-jre
-MAINTAINER Zhangbin <zhangbin.zj@gmail.com>
+FROM daocloud.io/tcsoft2016/springboot-maven
 
-ADD ./target/registry.jar /app/
+ENV RUN_ENV prod
+
+COPY pom.xml /tmp/build/
+COPY src /tmp/build/src
+
+RUN echo "root:Q!W@E#R$" | chpasswd \
+    && cd /tmp/build \
+    && mvn clean package -q -P${RUN_ENV} -DskipTests=true \
+    && mv target/*.jar /app/eureka.jar \
+    && rm -rf /tmp/build
+
 CMD ["java", "-Xmx200m", "-jar", "/app/eureka.jar"]
 
 EXPOSE 8761
