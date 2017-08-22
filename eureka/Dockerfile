@@ -2,8 +2,8 @@ FROM daocloud.io/tcsoft2016/springboot-maven
 
 ENV RUN_ENV prod
 
-COPY pom.xml /tmp/build/
-COPY src /tmp/build/src
+COPY eureka/pom.xml /tmp/build/
+COPY eureka/src /tmp/build/src
 
 RUN echo "root:Q!W@E#R$" | chpasswd \
     && cd /tmp/build \
