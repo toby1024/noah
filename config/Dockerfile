@@ -9,7 +9,7 @@ RUN echo "root:Q!W@E#R$" | chpasswd \
     && cd /tmp/build \
     && mkdir /app \
     && mvn clean package -q -P${RUN_ENV} -DskipTests=true \
-    && mv target/*.jar /app/gateway.jar \
+    && mv target/*.jar /app/config.jar \
     && rm -rf /tmp/build
 
 CMD ["java", "-Xmx200m", "-jar", "/app/config.jar"]
