@@ -30,7 +30,6 @@ class PostFilter extends ZuulFilter {
     Object run() {
         log.info("this is a post filter: Receive response")
         HttpServletResponse response = RequestContext.getCurrentContext().getResponse()
-        response.getOutputStream().print(", i am filter")
-        response.flushBuffer() nz
+        response.flushBuffer()
     }
 }
