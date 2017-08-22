@@ -8,7 +8,7 @@ COPY eureka/src /tmp/build/src
 RUN echo "root:Q!W@E#R$" | chpasswd \
     && cd /tmp/build \
     && mvn clean package -q -P${RUN_ENV} -DskipTests=true \
-    && mv target/*.jar /app/eureka.jar \
+    && mv eureka/target/*.jar /app/eureka.jar \
     && rm -rf /tmp/build
 
 CMD ["java", "-Xmx200m", "-jar", "/app/eureka.jar"]
