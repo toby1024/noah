@@ -14,9 +14,6 @@ target/
 *.iws
 *.iml
 *.ipr
-src/target/
-.mvn
-config/src/main/resources/application.properties
 
 ### NetBeans ###
 nbproject/private/

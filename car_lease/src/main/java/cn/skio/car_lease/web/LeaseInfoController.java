@@ -22,6 +22,7 @@ public class LeaseInfoController {
 
     @RequestMapping("/lease_infos")
     List<LeaseInfo> findAll(){
+        System.out.println("==========>");
         return leaseInfoService.findAll();
     }
 }
