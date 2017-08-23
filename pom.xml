@@ -17,6 +17,7 @@
 		<module>gateway</module>
 		<module>config</module>
 		<module>web</module>
+		<module>hystrix_dashboard</module>
 	</modules>
 
 </project>
