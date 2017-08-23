@@ -12,6 +12,6 @@ RUN echo "root:Q!W@E#R$" | chpasswd \
     && mv target/*.jar /app/eureka.jar \
     && rm -rf /tmp/build
 
-CMD ["java", "-Xmx200m", "-jar", "/app/eureka.jar"]
+CMD ["java", "-Xmx200m", "-jar", "/app/eureka.jar", "--spring.config.location=/app/application.yml"]
 
 EXPOSE 8761
