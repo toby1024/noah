@@ -6,9 +6,11 @@ import cn.skio.gateway.auth.jwt.JwtTokenUtil;
 import cn.skio.gateway.auth.jwt.JwtUserFactory;
 import cn.skio.gateway.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -37,5 +39,9 @@ public class AuthService {
         userToAdd.setUuid(UUID.randomUUID().toString().replaceAll("-",""));
         User userAdded = userRepository.save(userToAdd);
         return jwtTokenUtil.generateToken(JwtUserFactory.create(userAdded));
+    }
+
+    public List<User> activeUsers(int pageNo, int pageSize) {
+        return userRepository.findAllByLockedAndAndEnabledAndAndExpired(true, true, true, new PageRequest(pageNo, pageSize));
     }
 }

@@ -1,7 +1,5 @@
 package cn.skio.gateway.secruity;
 
-import cn.skio.gateway.auth.jwt.JwtAuthenticationTokenFilter;
-import cn.skio.gateway.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
