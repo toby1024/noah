@@ -10,7 +10,7 @@
 
 # gateway
 - 结合jwt，对/auth/* 不鉴权，其余请求需要在header中带上 Authorization
-```
+```java
 jwt:
   header: Authorization
   secret: 6BbW0pxO0YENxn38HMUbcQ
@@ -24,7 +24,7 @@ jwt:
 ```
 
 - 通过spring security来鉴权
-````
+```java
     //注意JwtAuthenticationTokenFilter
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
@@ -65,7 +65,7 @@ jwt:
 ```
 
 - 登录注册都在gataway项目auth目录中,返回jwt的token
-```
+```java
 // cn.skio.gateway.auth.web.AuthController
 @RestController
 @RequestMapping("/auth")
