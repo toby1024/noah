@@ -8,7 +8,7 @@
 - hystrix dashboard 监控服务状态
 - spring cloud stream 消息服务
 
-# gataway
+# gateway
 - 结合jwt，对/auth/* 不鉴权，其余请求需要在header中带上 Authorization
 ```
 jwt:
