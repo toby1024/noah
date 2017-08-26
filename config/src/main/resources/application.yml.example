@@ -1,0 +1,26 @@
+server:
+  port: 7001
+
+eureka:
+  instance:
+    hostname: config.micro.service
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka.micro.service:8761/eureka/
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://git.oschina.net/jasonGit/spring-config-learning
+          search-paths: config
+          username: username
+          password: password
+
+management:
+  security: false

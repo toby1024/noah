@@ -17,6 +17,7 @@ target/
 src/target/
 .mvn
 resources/application.properties
+resources/application.yml
 
 ### NetBeans ###
 nbproject/private/

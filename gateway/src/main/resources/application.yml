@@ -1,0 +1,27 @@
+zuul:
+  filter:
+    root: gateway/src/main/java/cn/skio/gateway/filter
+    interval: 5
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.netflix.discovery: 'OFF'
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/noah_oauth
+    username: root
+    password:
+    driverClassName: com.mysql.jdbc.Driver
+
+jwt:
+  header: Authorization
+  secret: 6BbW0pxO0YENxn38HMUbcQ
+  expiration: 604800
+  tokenHead: "NOAH_"
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+      register: "auth/register"

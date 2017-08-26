@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      uri: http://config.micro.service:7001
+
+server:
+  port: 5556
+
+eureka:
+  instance:
+    hostname: gateway.micro.service
+  client:
+    serviceUrl:
+      defaultZone: http://eureka.micro.service:8761/eureka
+
+management:
+  security:
+    enabled: false
