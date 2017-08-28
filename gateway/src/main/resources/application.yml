@@ -30,6 +30,9 @@ spring:
       max-idle: 8
       min-idle: 0
 
+redis:
+  catch_time_out_days: 10
+
 jwt:
   header: Authorization
   secret: 6BbW0pxO0YENxn38HMUbcQ
