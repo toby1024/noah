@@ -26,4 +26,8 @@ public class User {
     private boolean expired;
     private boolean enabled;
 
+    public boolean isActive(){
+        return this.isEnabled() && !this.isLocked() && !this.isExpired();
+    }
+
 }

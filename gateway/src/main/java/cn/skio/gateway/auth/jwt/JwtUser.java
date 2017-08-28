@@ -1,10 +1,14 @@
 package cn.skio.gateway.auth.jwt;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Getter
+@AllArgsConstructor
 public class JwtUser implements UserDetails {
 
     private String username;
@@ -14,22 +18,18 @@ public class JwtUser implements UserDetails {
     private boolean expired;
     private boolean enabled;
 
-    public JwtUser(String uuid, String username, String password, boolean locked, boolean expired, boolean enabled) {
-        this.uuid = uuid;
-        this.username = username;
-        this.password = password;
-        this.locked = locked;
-        this.expired = expired;
-        this.enabled = enabled;
+    protected JwtUser(){
+        this.username = null;
+        this.password = null;
+        this.uuid = null;
+        this.locked = true;
+        this.expired = true;
+        this.enabled = false;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    public String getUuid() {
-        return uuid;
     }
 
     @Override

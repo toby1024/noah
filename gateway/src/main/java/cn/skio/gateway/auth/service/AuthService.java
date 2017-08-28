@@ -24,7 +24,13 @@ public class AuthService {
 
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username);
-        return jwtTokenUtil.generateToken(JwtUserFactory.create(user));
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if(encoder.matches(password, user.getPassword()) && user.isActive()) {
+            return jwtTokenUtil.generateToken(JwtUserFactory.create(user));
+        }else{
+            return null;
+        }
     }
 
     public String register(String username, String rawPassword) {
@@ -42,6 +48,6 @@ public class AuthService {
     }
 
     public List<User> activeUsers(int pageNo, int pageSize) {
-        return userRepository.findAllByLockedAndAndEnabledAndAndExpired(true, true, true, new PageRequest(pageNo, pageSize));
+        return userRepository.findAllByLockedAndAndEnabledAndAndExpired(false, true, false, new PageRequest(pageNo, pageSize));
     }
 }

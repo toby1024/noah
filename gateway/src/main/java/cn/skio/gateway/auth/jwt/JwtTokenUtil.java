@@ -1,8 +1,12 @@
 package cn.skio.gateway.auth.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.CompressionCodec;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.TextCodec;
+import io.jsonwebtoken.impl.crypto.DefaultJwtSigner;
+import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -47,6 +51,13 @@ public class JwtTokenUtil implements Serializable {
             created = null;
         }
         return created;
+    }
+
+    public String getSignFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getSignature();
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -121,6 +132,18 @@ public class JwtTokenUtil implements Serializable {
         JwtUser user = (JwtUser) userDetails;
         final String username = getUsernameFromToken(token);
         final String uuid = getUserUuidFromToken(token);
-        return username.equals(user.getUsername()) && uuid.equals(user.getUuid()) && !isTokenExpired(token);
+
+        Claims body = getClaimsFromToken(token);
+        Date expirationDate = getExpirationDateFromToken(token);
+        String sign = getSignFromToken(token);
+
+        String verifySign = getSignFromToken(Jwts
+                                                .builder()
+                                                .setClaims(body)
+                                                .setExpiration(expirationDate)
+                                                .signWith(SignatureAlgorithm.HS512, secret)
+                                                .compact());
+
+        return sign.equals(verifySign) && username.equals(user.getUsername()) && uuid.equals(user.getUuid()) && !isTokenExpired(token);
     }
 }

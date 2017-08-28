@@ -10,9 +10,9 @@ public class JwtUserFactory {
 
     public static JwtUser create(User user) {
         return new JwtUser(
-                user.getUuid(),
                 user.getUsername(),
                 user.getPassword(),
+                user.getUuid(),
                 user.isLocked(),
                 user.isExpired(),
                 user.isEnabled());
