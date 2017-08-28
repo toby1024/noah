@@ -18,6 +18,18 @@ spring:
     password:
     driverClassName: com.mysql.jdbc.Driver
 
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    timeout: 20
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+
 jwt:
   header: Authorization
   secret: 6BbW0pxO0YENxn38HMUbcQ

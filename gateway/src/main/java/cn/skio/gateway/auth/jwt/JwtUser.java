@@ -5,11 +5,12 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 @Getter
 @AllArgsConstructor
-public class JwtUser implements UserDetails {
+public class JwtUser implements UserDetails, Serializable {
 
     private String username;
     private String password;
@@ -60,5 +61,9 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean isActive(){
+        return this.isEnabled() && !this.isLocked() && !this.isExpired();
     }
 }
