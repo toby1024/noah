@@ -19,12 +19,12 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private Date createdAt;
-    private Date updatedAt;
+    private Date createdAt = new Date();
+    private Date updatedAt = new Date();
     private Date lastPasswordResetDate;
-    private boolean locked;
-    private boolean expired;
-    private boolean enabled;
+    private boolean locked = false;
+    private boolean expired = false;
+    private boolean enabled = true;
 
     public boolean isActive(){
         return this.isEnabled() && !this.isLocked() && !this.isExpired();

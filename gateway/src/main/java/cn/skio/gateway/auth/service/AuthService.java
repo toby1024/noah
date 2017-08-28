@@ -6,6 +6,7 @@ import cn.skio.gateway.auth.jwt.JwtTokenUtil;
 import cn.skio.gateway.auth.jwt.JwtUser;
 import cn.skio.gateway.auth.jwt.JwtUserFactory;
 import cn.skio.gateway.auth.repository.UserRepository;
+import cn.skio.gateway.common.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -44,7 +44,7 @@ public class AuthService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public String login(String username, String password) {
+    public ResultMessage login(String username, String password) {
         ValueOperations<String, JwtUser> jwtUserCatch = redisTemplate.opsForValue();
         ValueOperations<String, String> tokenCatch = redisTemplate.opsForValue();
 
@@ -67,21 +67,26 @@ public class AuthService {
         }
 
         if(jwtUser != null && new BCryptPasswordEncoder().matches(password, jwtUser.getPassword()) && jwtUser.isActive()) {
-            return token;
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("username", jwtUser.getUsername());
+            resultMap.put("uuiod", jwtUser.getUuid());
+            resultMap.put("token", token);
+            return new ResultMessage<Map>(200,"success", resultMap);
         }else{
             return null;
         }
     }
 
-    public String register(String username, String rawPassword) {
+    public ResultMessage register(String username, String rawPassword) {
 
         if(userRepository.findByUsername(username) != null) {
-            return null;
+            return new ResultMessage(500, "重复的用户名");
         }
         User userToAdd = new User();
         userToAdd.setUsername(username);
         userToAdd.setPassword(new BCryptPasswordEncoder().encode(rawPassword));
         userToAdd.setUuid(UUID.randomUUID().toString().replaceAll("-",""));
+
         User userAdded = userRepository.save(userToAdd);
 
         ValueOperations<String, JwtUser> jwtUserCatch = redisTemplate.opsForValue();
@@ -92,7 +97,7 @@ public class AuthService {
         ValueOperations<String, String> tokenCatch = redisTemplate.opsForValue();
         tokenCatch.set(TOKEN_CATCH_PREFIX + jwtUser.getUuid(), token, catch_time_out, TimeUnit.DAYS);
 
-        return token;
+        return new ResultMessage(200, token);
     }
 
     public List<User> activeUsers(int pageNo, int pageSize) {
