@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-service
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/noah_demo
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+cscService:
+  queueName: event-sourcing
+  exchangeName: event-sourcing-exchange

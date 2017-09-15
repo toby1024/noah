@@ -18,6 +18,7 @@
 		<module>config</module>
 		<module>web</module>
 		<module>hystrix_dashboard</module>
+		<module>cdcservice</module>
 	</modules>
 
 </project>

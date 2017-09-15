@@ -1,0 +1,32 @@
+rabbitmq:
+  image: rabbitmq:management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+
+mysql:
+  image: daocloud.io/jason_skio/evnet-mysql:master-7893d12
+  ports:
+    - 3306:3306
+  environment:
+    - MYSQL_ROOT_PASSWORD=rootpassword
+    - MYSQL_USER=mysqluser
+    - MYSQL_PASSWORD=mysqlpw
+
+
+cdcservice:
+  build: ./
+  ports:
+    - "8099:8080"
+  links:
+    - mysql
+    - rabbit
+  environment:
+    SPRING_DATASOURCE_URL: jdbc:mysql://mysql/eventuate
+    SPRING_DATASOURCE_USERNAME: mysqluser
+    SPRING_DATASOURCE_PASSWORD: mysqlpw
+    SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.jdbc.Driver
+    EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: rabbit:5672
+    EVENTUATELOCAL_CDC_DB_USER_NAME: root
+    EVENTUATELOCAL_CDC_DB_PASSWORD: rootpassword
+    EVENTUATELOCAL_CDC_BINLOG_CLIENT_ID: 1234567890

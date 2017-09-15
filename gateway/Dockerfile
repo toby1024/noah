@@ -12,6 +12,7 @@ RUN echo "root:Q!W@E#R$" | chpasswd \
     && mv target/*.jar /app/gateway.jar \
     && rm -rf /tmp/build
 
-CMD ["java", "-Xmx200m", "-jar", "/app/gateway.jar"]
+CMD ["java", "-jar", "-Dspring.config.location=/app/application.yml", "/app/gateway.jar"]
+
 
 EXPOSE 8761
