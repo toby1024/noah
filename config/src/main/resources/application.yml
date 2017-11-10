@@ -20,7 +20,7 @@ spring:
           uri: http://git.oschina.net/jasonGit/spring-config-learning
           search-paths: config
           username: zhangbin.zj@gmail.com
-          password: hanhan1234
+          password: 
   rabbitmq:
     host: localhost
     port: 5672
